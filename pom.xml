@@ -52,9 +52,11 @@
 					</execution>
 				</executions>
 				<configuration>
-					<packageName>com.github.evryzh.erp.myschema</packageName>
-					<outputDirectory></outputDirectory>
-					<clearOutputDir>false</clearOutputDir>
+					<packageName>com.github.evryzh.erp.exchange2is</packageName>
+					<sources>
+						<source>src/main/resources/exchange2is.xsd</source>
+					</sources>
+					<clearOutputDir>true</clearOutputDir>
 				</configuration>
 			</plugin>
 		</plugins>

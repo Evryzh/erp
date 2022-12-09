@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+		xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/"
+		xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/"
+		xmlns:tns="http://www.2is.ru/exchange2is"
+		xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+		xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:xsd1="http://www.2is.ru/exchange2is"
+		name="Exchange2iS"
+		targetNamespace="http://www.2is.ru/exchange2is">
+	<types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+				xmlns:xs1="http://www.2is.ru/exchange2is"
+				targetNamespace="http://www.2is.ru/exchange2is"
+				attributeFormDefault="unqualified"
+				elementFormDefault="qualified">
+			<xs:complexType name="Error">
+				<xs:sequence>
+					<xs:element name="ErrorCode"
+							type="xs:string"
+							nillable="true"/>
+					<xs:element name="ErrorDescription"
+							type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ListOfErrors">
+				<xs:choice>
+					<xs:element name="Error"
+							type="tns:Error"
+							minOccurs="0"
+							maxOccurs="unbounded"/>
+					<xs:element name="ObjectError"
+							type="tns:ObjectError"
+							minOccurs="0"
+							maxOccurs="unbounded"/>
+				</xs:choice>
+			</xs:complexType>
+			<xs:complexType name="ObjectError">
+				<xs:sequence>
+					<xs:element name="ObjectGUID"
+							type="xs:string"/>
+					<xs:element name="ObjectType"
+							type="xs:string"/>
+					<xs:element name="ObjectDescription"
+							type="xs:string"
+							nillable="true"/>
+					<xs:element name="ErrorCode"
+							type="xs:string"
+							nillable="true"/>
+					<xs:element name="ErrorDescription"
+							type="xs:string"
+							nillable="true"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="inRecipient"
+								type="xs:string"/>
+						<xs:element name="inoutMessageNo"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="inReceivedNoMessageFromBus"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="inErrorsOfReceivedMessageFromBus"
+								type="tns:ListOfErrors"
+								nillable="true"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetDataResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:boolean"/>
+						<xs:element name="inoutMessageNo"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="outData"
+								type="xs:string"
+								nillable="true"/>
+						<xs:element name="outReceivedNoMessageFromIS"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="outErrorsOfReceivedMessageFromIS"
+								type="tns:ListOfErrors"
+								nillable="true"/>
+						<xs:element name="outMessageReadyDate"
+								type="xs:dateTime"
+								nillable="true"/>
+						<xs:element name="outObjectsQuantity"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="outErrors"
+								type="xs:string"
+								nillable="true"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PostData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="inSender"
+								type="xs:string"/>
+						<xs:element name="inData"
+								type="xs:string"
+								nillable="true"/>
+						<xs:element name="inoutMessageNo"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="inReceivedNoMessageFromBus"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="inErrorsOfReceivedMessageFromBus"
+								type="tns:ListOfErrors"
+								nillable="true"/>
+						<xs:element name="inObjectsQuantity"
+								type="xs:decimal"
+								nillable="true"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PostDataResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:boolean"/>
+						<xs:element name="inoutMessageNo"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="outReceivedNoMessageFromIS"
+								type="xs:decimal"
+								nillable="true"/>
+						<xs:element name="outErrorsOfReceivedMessageFromIS"
+								type="tns:ListOfErrors"
+								nillable="true"/>
+						<xs:element name="outErrors"
+								type="xs:string"
+								nillable="true"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PostError">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="inSender"
+								type="xs:string"/>
+						<xs:element name="inErrorCode"
+								type="xs:string"
+								nillable="true"/>
+						<xs:element name="inErrorDescription"
+								type="xs:string"
+								nillable="true"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PostErrorResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="return"
+								type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</types>
+	<message name="GetDataRequestMessage">
+		<part name="parameters"
+				element="tns:GetData"/>
+	</message>
+	<message name="GetDataResponseMessage">
+		<part name="parameters"
+				element="tns:GetDataResponse"/>
+	</message>
+	<message name="PostDataRequestMessage">
+		<part name="parameters"
+				element="tns:PostData"/>
+	</message>
+	<message name="PostDataResponseMessage">
+		<part name="parameters"
+				element="tns:PostDataResponse"/>
+	</message>
+	<message name="PostErrorRequestMessage">
+		<part name="parameters"
+				element="tns:PostError"/>
+	</message>
+	<message name="PostErrorResponseMessage">
+		<part name="parameters"
+				element="tns:PostErrorResponse"/>
+	</message>
+	<portType name="Exchange2iSPortType">
+		<operation name="GetData">
+			<input message="tns:GetDataRequestMessage"/>
+			<output message="tns:GetDataResponseMessage"/>
+		</operation>
+		<operation name="PostData">
+			<input message="tns:PostDataRequestMessage"/>
+			<output message="tns:PostDataResponseMessage"/>
+		</operation>
+		<operation name="PostError">
+			<input message="tns:PostErrorRequestMessage"/>
+			<output message="tns:PostErrorResponseMessage"/>
+		</operation>
+	</portType>
+	<binding name="Exchange2iSSoapBinding"
+			type="tns:Exchange2iSPortType">
+		<soapbind:binding style="document"
+				transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="GetData">
+			<soapbind:operation style="document"
+					soapAction="http://www.2is.ru/exchange2is#Exchange2iS:GetData"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="PostData">
+			<soapbind:operation style="document"
+					soapAction="http://www.2is.ru/exchange2is#Exchange2iS:PostData"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="PostError">
+			<soapbind:operation style="document"
+					soapAction="http://www.2is.ru/exchange2is#Exchange2iS:PostError"/>
+			<input>
+				<soapbind:body use="literal"/>
+			</input>
+			<output>
+				<soapbind:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="Exchange2iSSoap12Binding"
+			type="tns:Exchange2iSPortType">
+		<soap12bind:binding style="document"
+				transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="GetData">
+			<soap12bind:operation style="document"
+					soapAction="http://www.2is.ru/exchange2is#Exchange2iS:GetData"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="PostData">
+			<soap12bind:operation style="document"
+					soapAction="http://www.2is.ru/exchange2is#Exchange2iS:PostData"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="PostError">
+			<soap12bind:operation style="document"
+					soapAction="http://www.2is.ru/exchange2is#Exchange2iS:PostError"/>
+			<input>
+				<soap12bind:body use="literal"/>
+			</input>
+			<output>
+				<soap12bind:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="Exchange2iS">
+		<port name="Exchange2iSSoap"
+				binding="tns:Exchange2iSSoapBinding">
+			<documentation> 
+				<wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/"
+						conformsTo="http://ws-i.org/profiles/basic/1.1"/>
+			</documentation>
+			<soapbind:address location="http://spb99-d-2is/bus/ws/exchange2is"/>
+		</port>
+		<port name="Exchange2iSSoap12"
+				binding="tns:Exchange2iSSoap12Binding">
+			<soap12bind:address location="http://spb99-d-2is/bus/ws/exchange2is"/>
+		</port>
+	</service>
+</definitions>

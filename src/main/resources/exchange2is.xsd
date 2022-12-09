@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://www.example.org/exchange2is"
+		xmlns:tns="http://www.example.org/exchange2is"
+		elementFormDefault="qualified">
+
+	<xs:complexType name="Error">
+		<xs:sequence>
+			<xs:element name="ErrorCode" type="xs:string" nillable="true"/>
+			<xs:element name="ErrorDescription"	type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ListOfErrors">
+		<xs:choice>
+			<xs:element name="Error" type="tns:Error" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ObjectError" type="tns:ObjectError" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ObjectError">
+		<xs:sequence>
+			<xs:element name="ObjectGUID" type="xs:string"/>
+			<xs:element name="ObjectType" type="xs:string"/>
+			<xs:element name="ObjectDescription" type="xs:string" nillable="true"/>
+			<xs:element name="ErrorCode" type="xs:string" nillable="true"/>
+			<xs:element name="ErrorDescription"	type="xs:string" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="inRecipient" type="xs:string"/>
+				<xs:element name="inoutMessageNo" type="xs:decimal" nillable="true"/>
+				<xs:element name="inReceivedNoMessageFromBus" type="xs:decimal" nillable="true"/>
+				<xs:element name="inErrorsOfReceivedMessageFromBus" type="tns:ListOfErrors" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetDataResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="return" type="xs:boolean"/>
+				<xs:element name="inoutMessageNo" type="xs:decimal" nillable="true"/>
+				<xs:element name="outData" type="xs:string" nillable="true"/>
+				<xs:element name="outReceivedNoMessageFromIS" type="xs:decimal" nillable="true"/>
+				<xs:element name="outErrorsOfReceivedMessageFromIS" type="tns:ListOfErrors" nillable="true"/>
+				<xs:element name="outMessageReadyDate" type="xs:dateTime" nillable="true"/>
+				<xs:element name="outObjectsQuantity" type="xs:decimal" nillable="true"/>
+				<xs:element name="outErrors" type="xs:string" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PostData">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="inSender" type="xs:string"/>
+				<xs:element name="inData" type="xs:string" nillable="true"/>
+				<xs:element name="inoutMessageNo" type="xs:decimal" nillable="true"/>
+				<xs:element name="inReceivedNoMessageFromBus" type="xs:decimal" nillable="true"/>
+				<xs:element name="inErrorsOfReceivedMessageFromBus" type="tns:ListOfErrors" nillable="true"/>
+				<xs:element name="inObjectsQuantity" type="xs:decimal" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PostDataResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="return" type="xs:boolean"/>
+				<xs:element name="inoutMessageNo" type="xs:decimal" nillable="true"/>
+				<xs:element name="outReceivedNoMessageFromIS" type="xs:decimal" nillable="true"/>
+				<xs:element name="outErrorsOfReceivedMessageFromIS" type="tns:ListOfErrors" nillable="true"/>
+				<xs:element name="outErrors" type="xs:string" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PostError">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="inSender" type="xs:string"/>
+				<xs:element name="inErrorCode" type="xs:string" nillable="true"/>
+				<xs:element name="inErrorDescription" type="xs:string" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PostErrorResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="return" type="xs:boolean"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
